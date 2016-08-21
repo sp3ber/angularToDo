@@ -1,0 +1,19 @@
+.todos {
+  background: white;
+  margin: 0 auto;
+  width: 600px;
+  padding: 35px 35px 75px;
+  box-shadow: 0 0 35px -5px rgba(0,0,0,0.1);
+  position: relative;
+
+  &__list {
+    list-style: none;
+  }
+
+  &__add-btn{
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+}

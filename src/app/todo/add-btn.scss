@@ -1,0 +1,28 @@
+.add-btn{
+  $btn-size: 80px;
+  width: $btn-size;
+  height: $btn-size;
+  border-radius: 50%;
+  background: #50e3a4;
+  color: rgba(0,0,0,0.20);
+  text-shadow: 0 0 0 5px rgba(0,0,0,0.1);
+  line-height: $btn-size;
+  text-align: center;
+  border: 0;
+  padding: 0;
+  font-size: $btn-size * 46.666 / 100;
+  box-shadow: 0 0 25px -5px rgba(0,0,0,0.3) , 0 0 0px 0px rgba(0,0,0,0.1) inset;
+  transition: all 0.2s;
+
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    box-shadow: 0 0 0px 0px rgba(0,0,0,0.3), 0 0 0px 0px rgba(0,0,0,0.1) inset;
+    cursor: pointer;
+  }
+  &:active{
+    outline: 0;
+    box-shadow: 0 0 0px 0px rgba(0,0,0,0.3) , 0 0 15px 0px rgba(0,0,0,0.2) inset;
+  }
+}

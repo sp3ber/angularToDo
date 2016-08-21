@@ -1,0 +1,19 @@
+<article class="todos">
+    <ul class="todos__list">
+        <li ng-repeat="todo in $ctrl.currentTodos track by $index" class="todos__item">
+            <todo-item
+                class="todos__item"
+                set-editable-todo="$ctrl.setEditableTodo"
+                is-editable="$ctrl.isEditable"
+                edit-todo="$ctrl.editTodo"
+                todo="todo">
+            </todo-item>
+        </li>
+    </ul>
+    <button type="button"
+            ng-disabled="$ctrl.isCreatingEmptyTodo()"
+            ng-click="$ctrl.addTodo()"
+            class="add-btn todos__add-btn">
+        +
+    </button>
+</article>

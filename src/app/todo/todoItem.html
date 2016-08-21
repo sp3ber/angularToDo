@@ -1,0 +1,17 @@
+<div class="todo">
+    <section class="todo__content">
+        <div class="todo__title" ng-show="!$ctrl.isEditable($ctrl.todo)" ng-click="$ctrl.setEditableTodo($ctrl.todo)">
+            {{$ctrl.todo.text}}
+        </div>
+        <form class="todo__form"
+              name="todoForm"
+              ng-show="$ctrl.isEditable($ctrl.todo)"
+              ng-submit="$ctrl.editTodo($ctrl.todo)">
+            <input class="todo__input"
+                   ng-model-options="{ updateOn: 'blur' }"
+                   ng-keyup="$ctrl.cancelEdit($event)"
+                   ng-blur="$ctrl.blurTodo($event)"
+                   focus-if="$ctrl.isEditable($ctrl.todo)" ng-model="$ctrl.todo.text"/>
+        </form>
+    </section>
+</div>

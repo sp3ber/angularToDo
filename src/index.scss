@@ -1,0 +1,11 @@
+//font variables
+$font-main: 'Fira Sans', sans-serif;
+body {
+  background: #f0efea;
+  font-family: $font-main;
+}
+.main-container {
+  width: 960px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
