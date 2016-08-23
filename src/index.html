@@ -7,37 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,700|Merriweather:400,700&subset=cyrillic,cyrillic-ext" rel="stylesheet">
-    <!-- firebase dep's-->
-    <!--<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>-->
-<!--    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyB-lVFYWcGWRrtDyHC7tU9BLCgzmzIWgSc",
-        authDomain: "angulartodo-99632.firebaseapp.com",
-        databaseURL: "https://angulartodo-99632.firebaseio.com",
-        storageBucket: ""
-      };
-      firebase.initializeApp(config);
-    </script>
-    <script>
-      function writeUserData(todo) {
-        firebase.database().ref('todos/').push({
-          todo: todo
-        });
-      }
-      writeUserData({text:'super'});
 
-      var todosRef = firebase.database().ref('todos/');
-      todosRef.on('value', function(data) {
-        var todos = data.val();
-        let todosArr = Object.keys(todos).map(function(todoKey){
-          todos[todoKey].id = todoKey;
-          return todos[todoKey];
-        });
-        console.log(todosArr);
-      });
-
-    </script>-->
   </head>
 
   <body ng-app="app">

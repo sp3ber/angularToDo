@@ -1,24 +1,16 @@
-const INITIAL_STATE = [
-  {
-    "id": 1,
-    "text": "my todo item 1",
-    "active": true
-  },
-  {
-    "id": 2,
-    "text": "my todo item 2",
-    "active": true
-  }
-];
-
-export default function todo(state = INITIAL_STATE, action) {
+export default function todo(state = [], action) {
   if (!action || !action.type) {
     return state;
   }
   let newState = Object.assign([], state);
   switch (action.type) {
+    case 'GET_TODOS':
+      return action.todos;
+      break;
     case 'ADD_TODO':
       newState.push(action.todo);
+      console.log(newState);
+      console.log(action.todo);
       return newState;
     break;
     case 'EDIT_TODO':

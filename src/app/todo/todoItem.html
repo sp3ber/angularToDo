@@ -9,7 +9,6 @@
               ng-submit="$ctrl.sendTodo()">
             <input class="todo__input"
                    ng-keyup="$ctrl.cancelEdit($event)"
-                   ng-blur="$ctrl.sendTodo()"
                    focus-if="$ctrl.isEditable()" ng-model="$ctrl.todo.text"/>
         </form>
     </section>

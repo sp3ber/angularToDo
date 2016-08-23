@@ -1,18 +1,13 @@
 import todoActions from './actions/todo-actions';
+import { bindActionCreators } from 'redux';
+
 export const main = {
   template: require('./main.html'),
-  controller: function ($ngRedux, $firebaseObject, $scope, $firebaseArray) {
+  controller: function ($ngRedux, $scope, firebaseService) {
     /** @ngInject */
     this.todos = [];
-    this.$onInit = function() {
-      var config = {
-        apiKey: "AIzaSyB-lVFYWcGWRrtDyHC7tU9BLCgzmzIWgSc",
-        authDomain: "angulartodo-99632.firebaseapp.com",
-        databaseURL: "https://angulartodo-99632.firebaseio.com",
-        storageBucket: ""
-      };
-      firebase.initializeApp(config);
-      var ref = firebase.database().ref();
+    this.$onInit = function(){
+      this.getTodos();
     };
 
     this.mapStateToThis = function (state) {
@@ -20,7 +15,8 @@ export const main = {
         todos: state.todos
       };
     };
-    const unsubscribe = $ngRedux.connect(this.mapStateToThis, todoActions)(this);
+    var actions = bindActionCreators(firebaseService, $ngRedux.dispatch);
+    const unsubscribe = $ngRedux.connect(this.mapStateToThis, firebaseService)(this);
     $scope.$on('$destroy', unsubscribe);
   }
 };

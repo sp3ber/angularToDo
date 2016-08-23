@@ -1,26 +1,49 @@
-import { bindActionCreators } from 'redux';
-
-export default function testService($ngRedux, $http){
+export default function firebaseService($ngRedux, $firebaseObject, $firebaseArray){
   /** @ngInject */
+
+  console.log('suuper');
+
+  var config = {
+    apiKey: "AIzaSyB-lVFYWcGWRrtDyHC7tU9BLCgzmzIWgSc",
+    authDomain: "angulartodo-99632.firebaseapp.com",
+    databaseURL: "https://angulartodo-99632.firebaseio.com",
+    storageBucket: ""
+  };
+  firebase.initializeApp(config);
+  var ref = firebase.database().ref().child('todos');
+
   let actionCreator = {
-    doSomeStuff: () => {
+    getTodos: () => {
       return function (dispatch) {
         dispatch({
-          type:'TEST1'
+          type:'IS_LOADING'
         });
 
-        return $http.get('http://www.test.de')
-          .then(json =>
+        let data = $firebaseArray(ref);
+        data.$loaded()
+          .then(()=>(
             dispatch({
-              type:'TEST2',
-              json:json
+              type: 'GET_TODOS',
+              todos: data
             })
-          );
+          ));
       };
     },
-    doSomeOtherStuff:() => {
-      return {}
+    removeAllTodos: ()=>{
+      console.log('remove all');
+      let data = $firebaseArray(ref);
+      data.$loaded().then(function(){
+        data.forEach(function(item, index){
+          data.$remove(index);
+        })
+      });
+      return actionCreator.getTodos();
+    },
+    addTodo: (todo)=>{
+      return function (dispatch){
+        ref.push(todo);
+      }
     }
   };
-  return bindActionCreators(actionCreator, $ngRedux.dispatch);
+  return actionCreator;
 }

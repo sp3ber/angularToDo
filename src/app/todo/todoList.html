@@ -1,6 +1,6 @@
 <article class="todos">
     <ul class="todos__list">
-        <li ng-repeat="todo in $ctrl.currentTodos track by $index" class="todos__item">
+        <li ng-repeat="todo in $ctrl.currentTodos.slice().reverse() track by $index" class="todos__item">
             <todo-item
                 class="todos__item"
                 set-editable-todo="$ctrl.setEditableTodo"
@@ -11,8 +11,10 @@
         </li>
     </ul>
     <button type="button"
-            ng-click="$ctrl.addTodo()"
+            ng-click="$ctrl.createTodo()"
             class="add-btn todos__add-btn">
         +
     </button>
+    <button type="button"
+            ng-click="$ctrl.removeAllTodos()">remove all</button>
 </article>

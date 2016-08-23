@@ -5,9 +5,10 @@ export const todoList = {
   template: require('./todoList.html'),
   bindings: {
     todos: '<',
-    addItem: '<',
+    addTodo: '<',
     editItem: '<',
-    getTodos: '<'
+    getTodos: '<',
+    removeAllTodos: '<'
   },
   controller: function () {
     this.$onChanges = function (changes) {
@@ -17,7 +18,7 @@ export const todoList = {
     this.isEditable = isEditable.bind(this);
     this.setEditableTodo = setEditableTodo.bind(this);
     this.sendTodo = sendTodo.bind(this);
-    this.addTodo = addTodo.bind(this);
+    this.createTodo = createTodo.bind(this);
 
     function isEditable(todo) {
       return todo === currentEditableTodo;
@@ -25,7 +26,7 @@ export const todoList = {
     function setEditableTodo(todo) {
       return currentEditableTodo = todo;
     }
-    function addTodo() {
+    function createTodo() {
       let newEmptyTodo = {
         text: ''
       };
@@ -36,6 +37,7 @@ export const todoList = {
     }
 
     function sendTodo (todo) {
+      console.log('seend');
       //clean new empty todo
       if (todo.text.trim() == '' && !todo.id) {
         console.log('remove new');
@@ -43,10 +45,10 @@ export const todoList = {
         return this.currentTodos = this.currentTodos
           .filter((currentTodo)=>(currentTodo.text || currentTodo.id ));
       }
-      if (todo.id && todo.text.trim() === '') {
+      if (todo.$id && todo.text.trim() === '') {
         return console.info('remove exists!');
       }
-      todo.id ?  this.editItem(todo) : this.addItem(todo);
+      todo.$id ?  null : this.addTodo(todo);
       this.setEditableTodo(null);
     }
   }
