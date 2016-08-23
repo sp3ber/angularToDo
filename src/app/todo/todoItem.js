@@ -5,34 +5,31 @@ const escapeKeyCode = 27;
 export const todoItem = {
   template: require('./todoItem.html'),
   bindings: {
-    todo: '<',
-    isEditable: '<',
-    setEditableTodo: '<',
-    editTodo: '<',
+    parentTodo: '<todo',
+    isEditableParent: '<isEditable',
+    setEditableTodoParent: '<setEditableTodo',
+    sendTodoParent: '<sendTodo',
   },
-  controller: function ($scope, $timeout) {
+  controller: function () {
     /** @ngInject */
 
+    this.$onInit = function () {
+      this.isEditable = ()=>(this.isEditableParent(this.parentTodo));
+      this.setEditableTodo = ()=>(this.setEditableTodoParent(this.parentTodo));
+      this.sendTodo = ()=>(this.sendTodoParent(this.todo));
+    };
+
+    this.$onChanges = function (changes) {
+      this.todo = Object.assign([], this.parentTodo);
+    };
+
     this.cancelEdit = cancelEdit.bind(this);
-    this.blurTodo = blurTodo.bind(this);
 
     function cancelEdit(event) {
-      // revert model on escape btn
-      // example from documentation -
-      // https://docs.angularjs.org/api/ng/type/ngModel.NgModelController
       if (event.keyCode === escapeKeyCode) {
-        $scope.todoForm.$rollbackViewValue();
-        this.setEditableTodo(null);
+        this.currentTodo = Object.assign([], this.todo);
+        this.setEditableTodoParent(null);
       }
-    }
-    function blurTodo(){
-      //this timeout is needed, because blur event fired early,
-      //then model updates in updateOn blur
-      // more details -
-      // http://stackoverflow.com/questions/28776824/ng-blur-the-models-updated-value-is-not-avaiable-in-event
-      $timeout(function(){
-        this.editTodo(this.todo)
-      }.bind(this));
     }
   }
 };

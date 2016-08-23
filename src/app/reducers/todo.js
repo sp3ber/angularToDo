@@ -12,9 +12,6 @@ const INITIAL_STATE = [
 ];
 
 export default function todo(state = INITIAL_STATE, action) {
-  console.log('reducer init');
-  console.log(state);
-  return state;
   if (!action || !action.type) {
     return state;
   }
@@ -23,6 +20,7 @@ export default function todo(state = INITIAL_STATE, action) {
     case 'ADD_TODO':
       newState.push(action.todo);
       return newState;
+    break;
     case 'EDIT_TODO':
       const currentEditTodo = newState.filter(
         (currentTodo)=>(currentTodo.id === action.todo.id)
@@ -31,6 +29,7 @@ export default function todo(state = INITIAL_STATE, action) {
         currentEditTodo.text = action.todo.text;
       }
       return newState;
+    break;
     default:
       return state;
   }

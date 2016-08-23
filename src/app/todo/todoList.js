@@ -16,15 +16,11 @@ export const todoList = {
     let currentEditableTodo = null;
     this.isEditable = isEditable.bind(this);
     this.setEditableTodo = setEditableTodo.bind(this);
-    this.editTodo = editTodo.bind(this);
+    this.sendTodo = sendTodo.bind(this);
     this.addTodo = addTodo.bind(this);
-    this.isCreatingEmptyTodo = isCreatingEmptyTodo.bind(this);
 
     function isEditable(todo) {
       return todo === currentEditableTodo;
-    }
-    function isCreatingEmptyTodo(){
-      return currentEditableTodo && currentEditableTodo.text.trim() === '';
     }
     function setEditableTodo(todo) {
       return currentEditableTodo = todo;
@@ -39,10 +35,16 @@ export const todoList = {
       setEditableTodo(newEmptyTodo);
     }
 
-    function editTodo (todo) {
-      if (todo.text.trim() == '') {
-        this.currentTodos = this.currentTodos
-          .filter((currentTodo)=>(currentTodo!=todo));
+    function sendTodo (todo) {
+      //clean new empty todo
+      if (todo.text.trim() == '' && !todo.id) {
+        console.log('remove new');
+        currentEditableTodo = null;
+        return this.currentTodos = this.currentTodos
+          .filter((currentTodo)=>(currentTodo.text || currentTodo.id ));
+      }
+      if (todo.id && todo.text.trim() === '') {
+        return console.info('remove exists!');
       }
       todo.id ?  this.editItem(todo) : this.addItem(todo);
       this.setEditableTodo(null);

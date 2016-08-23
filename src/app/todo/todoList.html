@@ -5,13 +5,12 @@
                 class="todos__item"
                 set-editable-todo="$ctrl.setEditableTodo"
                 is-editable="$ctrl.isEditable"
-                edit-todo="$ctrl.editTodo"
+                send-todo="$ctrl.sendTodo"
                 todo="todo">
             </todo-item>
         </li>
     </ul>
     <button type="button"
-            ng-disabled="$ctrl.isCreatingEmptyTodo()"
             ng-click="$ctrl.addTodo()"
             class="add-btn todos__add-btn">
         +
