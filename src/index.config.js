@@ -1,6 +1,6 @@
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { combineReducers } from 'redux';
+import { combineReducers, applyMiddleware } from 'redux';
 import todo from './app/reducers/todo';
 
 const logger = createLogger({
@@ -11,7 +11,6 @@ const logger = createLogger({
 export default function config($ngReduxProvider, $httpProvider) {
   /** @ngInject */
   let reducer = combineReducers({todos: todo});
-  $ngReduxProvider.createStoreWith(reducer, [logger, thunk]);
-
+  $ngReduxProvider.createStoreWith(reducer, [thunk, logger]);
   $httpProvider.defaults.useXDomain = true;
 }

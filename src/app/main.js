@@ -1,9 +1,8 @@
 import todoActions from './actions/todo-actions';
-import { bindActionCreators } from 'redux';
 
 export const main = {
   template: require('./main.html'),
-  controller: function ($ngRedux, $scope, firebaseService) {
+  controller: function ($ngRedux, $scope, todoActions) {
     /** @ngInject */
     this.todos = [];
     this.$onInit = function(){
@@ -15,8 +14,7 @@ export const main = {
         todos: state.todos
       };
     };
-    var actions = bindActionCreators(firebaseService, $ngRedux.dispatch);
-    const unsubscribe = $ngRedux.connect(this.mapStateToThis, firebaseService)(this);
+    const unsubscribe = $ngRedux.connect(this.mapStateToThis, todoActions)(this);
     $scope.$on('$destroy', unsubscribe);
   }
 };

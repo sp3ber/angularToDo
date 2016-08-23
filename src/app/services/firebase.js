@@ -1,7 +1,4 @@
-export default function firebaseService($ngRedux, $firebaseObject, $firebaseArray){
-  /** @ngInject */
-
-  console.log('suuper');
+export default function firebaseService($ngRedux, $firebaseObject, $firebaseArray) {
 
   var config = {
     apiKey: "AIzaSyB-lVFYWcGWRrtDyHC7tU9BLCgzmzIWgSc",
@@ -12,38 +9,25 @@ export default function firebaseService($ngRedux, $firebaseObject, $firebaseArra
   firebase.initializeApp(config);
   var ref = firebase.database().ref().child('todos');
 
-  let actionCreator = {
-    getTodos: () => {
-      return function (dispatch) {
-        dispatch({
-          type:'IS_LOADING'
-        });
-
-        let data = $firebaseArray(ref);
-        data.$loaded()
-          .then(()=>(
-            dispatch({
-              type: 'GET_TODOS',
-              todos: data
-            })
-          ));
-      };
-    },
-    removeAllTodos: ()=>{
-      console.log('remove all');
-      let data = $firebaseArray(ref);
-      data.$loaded().then(function(){
-        data.forEach(function(item, index){
-          data.$remove(index);
-        })
-      });
-      return actionCreator.getTodos();
-    },
-    addTodo: (todo)=>{
-      return function (dispatch){
-        ref.push(todo);
-      }
-    }
+  const getTodos = () => {
+    let data = $firebaseArray(ref);
+    data.$loaded()
   };
-  return actionCreator;
+  const removeAllTodos = ()=> {
+    let data = $firebaseArray(ref);
+    data.$loaded().then(function () {
+      data.forEach(function (item, index) {
+        data.$remove(index);
+      })
+    });
+    this.getTodos();
+  };
+  const addTodo = (todo)=> {
+      ref.push(todo);
+  };
+  return {
+    addTodo,
+    removeAllTodos,
+    getTodos
+  }
 }
