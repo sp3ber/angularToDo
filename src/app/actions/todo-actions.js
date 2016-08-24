@@ -1,28 +1,45 @@
 export default function todoActions(firebaseService){
   /** @ngInject */
 
-  console.log(firebaseService);
   function addTodo(todo) {
-    return {
-      type: 'ADD_TODO',
-      todo: todo
-    };
+    return (dispatch)=>{
+      return firebaseService
+        .addTodo(todo)
+        .then((todo)=>{
+          dispatch(
+            {
+              type: 'ADD_TODO',
+              todo: todo
+            }
+          )
+        })
+    }
   }
   function getTodos(){
-    function delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms))
-    }
     return (dispatch)=>{
-      return delay(2000).then(() => {
-        console.log('save-async-resolved');
-        return dispatch({type:'GET_TODOS', todos:[]});
-      });
+      return firebaseService
+        .getTodos()
+        .then((todos)=>{
+          console.log(todos);
+          dispatch(
+            {
+              type: 'GET_TODOS',
+              todos: todos
+            }
+          )
+        })
     }
   }
-  function removeAllTodos(todo) {
-    return {
-      type: 'REMOVE_ALL_TODOS'
-    };
+  function removeAllTodos() {
+    return (dispatch)=>{
+      return firebaseService
+        .removeAllTodos()
+        .then(()=>(
+          dispatch({
+              type: 'REMOVE_ALL_TODOS'
+            })
+        ));
+    }
   }
   function editTodo(todo) {
     return {

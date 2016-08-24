@@ -1,4 +1,4 @@
-export default function firebaseService($ngRedux, $firebaseObject, $firebaseArray) {
+export default function firebaseService($ngRedux, $firebaseObject, $firebaseArray, $q) {
 
   var config = {
     apiKey: "AIzaSyB-lVFYWcGWRrtDyHC7tU9BLCgzmzIWgSc",
@@ -11,19 +11,18 @@ export default function firebaseService($ngRedux, $firebaseObject, $firebaseArra
 
   const getTodos = () => {
     let data = $firebaseArray(ref);
-    data.$loaded()
+    return data.$loaded().then(()=>(data));
   };
   const removeAllTodos = ()=> {
     let data = $firebaseArray(ref);
-    data.$loaded().then(function () {
-      data.forEach(function (item, index) {
-        data.$remove(index);
-      })
+    return data.$loaded().then(()=>{
+      data.forEach(()=> (
+        data.$remove(index)
+      ));
     });
-    this.getTodos();
   };
   const addTodo = (todo)=> {
-      ref.push(todo);
+      return ref.push(todo);
   };
   return {
     addTodo,

@@ -7,6 +7,9 @@ export default function todo(state = [], action) {
     case 'GET_TODOS':
       return action.todos;
       break;
+    case 'REMOVE_ALL_TODOS':
+      return [];
+      break;
     case 'ADD_TODO':
       newState.push(action.todo);
       console.log(newState);

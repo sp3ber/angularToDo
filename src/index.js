@@ -12,6 +12,7 @@ import firebaseService from './app/services/firebase';
 
 import {main} from './app/main';
 
+import 'reset-css/_reset.scss';
 import './index.scss';
 
 angular
