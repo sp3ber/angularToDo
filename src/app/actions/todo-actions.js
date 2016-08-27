@@ -15,12 +15,25 @@ export default function todoActions(firebaseService){
         })
     }
   }
+  function removeTodo(todo) {
+    return (dispatch)=>{
+      return firebaseService
+        .removeTodo(todo)
+        .then(()=>{
+          dispatch(
+            {
+              type: 'REMOVE_TODO',
+              todo: todo
+            }
+          )
+        })
+    }
+  }
   function getTodos(){
     return (dispatch)=>{
       return firebaseService
         .getTodos()
         .then((todos)=>{
-          console.log(todos);
           dispatch(
             {
               type: 'GET_TODOS',
@@ -42,6 +55,8 @@ export default function todoActions(firebaseService){
     }
   }
   function editTodo(todo) {
+    firebaseService
+      .editTodo(todo);
     return {
       type: 'EDIT_TODO',
       todo: todo
@@ -52,6 +67,7 @@ export default function todoActions(firebaseService){
     editTodo,
     addTodo,
     removeAllTodos,
-    getTodos
+    getTodos,
+    removeTodo
   }
 }

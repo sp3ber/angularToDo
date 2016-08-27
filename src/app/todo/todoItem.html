@@ -1,14 +1,24 @@
 <div class="todo">
     <section class="todo__content">
-        <div class="todo__title" ng-show="!$ctrl.isEditable()" ng-click="$ctrl.setEditableTodo()">
+        <div class="todo__title" ng-class="{'todo__title--finished': $ctrl.isFinished()}" ng-show="!$ctrl.isEditable()" ng-click="!$ctrl.isFinished() && $ctrl.setEditableTodo()">
             {{$ctrl.todo.text}}
         </div>
+        <fieldset ng-if="!$ctrl.isEditable()"
+                  class="active-checkbox todo__active-checkbox">
+            <input  ng-model="$ctrl.todo.finished"
+                    id="{{$ctrl.idKey}}"
+                    type="checkbox"
+                    ng-change="$ctrl.submitTodo()"
+                    class="active-checkbox__hidden"/>
+            <label for="{{$ctrl.idKey}}" class="active-checkbox__present"></label>
+        </fieldset>
+        <button class="remove-btn todo__remove-btn">x</button>
         <form class="todo__form"
               name="todoForm"
-              ng-show="$ctrl.isEditable()"
-              ng-submit="$ctrl.sendTodo()">
+              ng-if="$ctrl.isEditable()">
             <input class="todo__input"
-                   ng-keyup="$ctrl.cancelEdit($event)"
+                   ng-blur="$ctrl.onBlur()"
+                   ng-keyup="$ctrl.onKeyUp($event)"
                    focus-if="$ctrl.isEditable()" ng-model="$ctrl.todo.text"/>
         </form>
     </section>

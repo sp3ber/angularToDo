@@ -1,4 +1,5 @@
 <article class="todos">
+    <h2 class="todos__header">My awesome TODO list</h2>
     <ul class="todos__list">
         <li ng-repeat="todo in $ctrl.currentTodos.slice().reverse() track by $index" class="todos__item">
             <todo-item

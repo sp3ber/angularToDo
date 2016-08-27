@@ -12,16 +12,23 @@ export default function todo(state = [], action) {
       break;
     case 'ADD_TODO':
       newState.push(action.todo);
-      console.log(newState);
-      console.log(action.todo);
       return newState;
     break;
     case 'EDIT_TODO':
-      const currentEditTodo = newState.filter(
-        (currentTodo)=>(currentTodo.id === action.todo.id)
-      )[0];
+      const currentEditTodo = newState.find(
+        (item)=>(item.id === action.todo.id)
+      );
       if (currentEditTodo) {
-        currentEditTodo.text = action.todo.text;
+        Object.assign(currentEditTodo, action.todo);
+      }
+      return newState;
+    break;
+    case 'REMOVE_TODO':
+      const removeTodoIndex = newState.findIndex(
+        (item)=>(item.id === action.todo.id)
+      );
+      if (removeTodoIndex >= 0) {
+        newState.splice(removeTodoIndex, 1);
       }
       return newState;
     break;

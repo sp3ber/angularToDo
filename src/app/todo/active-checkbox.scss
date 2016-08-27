@@ -1,0 +1,30 @@
+.active-checkbox {
+
+  &__hidden {
+    position: absolute;
+    visibility: hidden;
+  }
+
+
+
+  &__present {
+    display: block;
+    width: 23px;
+    height: 23px;
+    box-sizing:border-box;
+    border-radius: 50%;
+    color: #edeff4;
+    border: 2px solid;
+  }
+
+  &__hidden:checked + &__present {
+    color: #50e3a4;
+    &:before {
+      content: '\2713';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+}

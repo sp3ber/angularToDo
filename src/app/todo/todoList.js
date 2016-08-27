@@ -1,3 +1,4 @@
+import {calculateChanges} from '../utils';
 import './todos.scss';
 import './add-btn.scss';
 
@@ -6,50 +7,72 @@ export const todoList = {
   bindings: {
     todos: '<',
     addTodo: '<',
-    editItem: '<',
+    removeTodo: '<',
+    editTodo: '<',
     getTodos: '<',
     removeAllTodos: '<'
   },
   controller: function () {
-    this.$onChanges = function (changes) {
-      this.currentTodos = Object.assign([], this.todos);
+    const $ctrl = this;
+    $ctrl.$onChanges = function (changes) {
+      $ctrl.currentTodos = Object.assign([], $ctrl.todos);
     };
     let currentEditableTodo = null;
-    this.isEditable = isEditable.bind(this);
-    this.setEditableTodo = setEditableTodo.bind(this);
-    this.sendTodo = sendTodo.bind(this);
-    this.createTodo = createTodo.bind(this);
+    $ctrl.isEditable = isEditable;
+    $ctrl.setEditableTodo = setEditableTodo;
+    $ctrl.sendTodo = sendTodo;
+    $ctrl.createTodo = createTodo;
+    $ctrl.getTodoIndex = getTodoIndex;
 
     function isEditable(todo) {
       return todo === currentEditableTodo;
     }
     function setEditableTodo(todo) {
       return currentEditableTodo = todo;
+
+    }
+    function getTodoIndex(todo){
+      return $ctrl.todos.findIndex((item)=>(
+        item.id === todo.id
+      ));
     }
     function createTodo() {
       let newEmptyTodo = {
         text: ''
       };
-      this.currentTodos.push(
+      $ctrl.currentTodos.push(
         newEmptyTodo
       );
       setEditableTodo(newEmptyTodo);
     }
-
     function sendTodo (todo) {
-      console.log('seend');
       //clean new empty todo
-      if (todo.text.trim() == '' && !todo.id) {
-        console.log('remove new');
-        currentEditableTodo = null;
-        return this.currentTodos = this.currentTodos
-          .filter((currentTodo)=>(currentTodo.text || currentTodo.id ));
+      console.log(isTodoEmpty(todo));
+      if (isTodoEmpty(todo) && isNewTodo(todo)) {
+        setEditableTodo(null);
+        return $ctrl.currentTodos = Object.assign([], $ctrl.todos);
       }
-      if (todo.$id && todo.text.trim() === '') {
-        return console.info('remove exists!');
+      if (!isNewTodo(todo) && isTodoEmpty(todo)) {
+        setEditableTodo(null);
+        return $ctrl.removeTodo(todo);
       }
-      todo.$id ?  null : this.addTodo(todo);
-      this.setEditableTodo(null);
+      if (!isNewTodo(todo)){
+        setEditableTodo(null);
+        return isTodoChanged(todo) ? $ctrl.editTodo(todo): null;
+      }
+      setEditableTodo(null);
+      return $ctrl.addTodo(todo);
+    }
+    function isNewTodo(todo){
+      return !('id' in todo);
+    }
+    function isTodoEmpty(todo){
+      return todo.text.trim() === '';
+    }
+    function isTodoChanged(todo){
+      const parentTodo = $ctrl.currentTodos.find((item)=>(item.id === todo.id));
+      console.log(Boolean(calculateChanges(parentTodo, todo)));
+      return Boolean(calculateChanges(parentTodo, todo));
     }
   }
 };

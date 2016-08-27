@@ -6,6 +6,11 @@
   box-shadow: 0 0 35px -5px rgba(0,0,0,0.1);
   position: relative;
 
+  &__header {
+    font-size: 2em;
+    margin-bottom: 25px;
+  }
+
   &__list {
     list-style: none;
   }
