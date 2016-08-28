@@ -16,6 +16,7 @@ export const todos = {
     let currentEditableTodo = null;
     $ctrl.$onChanges = function () {
       $ctrl.todos = Object.assign([], $ctrl.parentTodos);
+      setEditableTodo(null);
     };
     $ctrl.$onInit = function () {
       $ctrl.currentFilter = $ctrl.noFilter;
