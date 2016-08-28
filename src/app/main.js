@@ -1,11 +1,9 @@
-import todoActions from './actions/todo-actions';
-
 export const main = {
   template: require('./main.html'),
-  controller: function ($ngRedux, $scope, todoActions) {
+  controller($ngRedux, todoActions) {
     /** @ngInject */
     const $ctrl = this;
-    $ctrl.$onInit = function(){
+    $ctrl.$onInit = function () {
       $ctrl.getTodos();
     };
 
@@ -16,7 +14,6 @@ export const main = {
         todos: state.todos
       };
     };
-    const unsubscribe = $ngRedux.connect($ctrl.mapStateTo$ctrl, todoActions)($ctrl);
-    $scope.$on('$destroy', unsubscribe);
+    $ctrl.$onDestroy = $ngRedux.connect($ctrl.mapStateTo$ctrl, todoActions)($ctrl);
   }
 };

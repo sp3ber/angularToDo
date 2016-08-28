@@ -10,21 +10,21 @@ export const todo = {
     isEditableParent: '<isEditable',
     setEditableTodoParent: '<setEditableTodo',
     sendTodoParent: '<sendTodo',
-    removeParentTodo: '<removeTodo',
+    removeParentTodo: '<removeTodo'
   },
-  controller: function () {
+  controller() {
     /** @ngInject */
 
     const $ctrl = this;
 
     $ctrl.$onInit = function () {
-      $ctrl.isEditable = ()=>($ctrl.isEditableParent($ctrl.parentTodo));
-      $ctrl.setEditableTodo = ()=>($ctrl.setEditableTodoParent($ctrl.parentTodo));
-      $ctrl.sendTodo = ()=>($ctrl.sendTodoParent($ctrl.todo));
-      $ctrl.removeTodo = ()=>($ctrl.removeParentTodo($ctrl.todo));
+      $ctrl.isEditable = () => ($ctrl.isEditableParent($ctrl.parentTodo));
+      $ctrl.setEditableTodo = () => ($ctrl.setEditableTodoParent($ctrl.parentTodo));
+      $ctrl.sendTodo = () => ($ctrl.sendTodoParent($ctrl.todo));
+      $ctrl.removeTodo = () => ($ctrl.removeParentTodo($ctrl.todo));
     };
 
-    $ctrl.$onChanges = function (changes) {
+    $ctrl.$onChanges = function () {
       $ctrl.todo = Object.assign({}, $ctrl.parentTodo);
     };
 
@@ -35,7 +35,7 @@ export const todo = {
     $ctrl.idKey = getIdKey();
     $ctrl.isFinished = isFinished;
 
-    function onBlur(event) {
+    function onBlur() {
       $ctrl.setEditableTodoParent(null);
       submitTodo();
     }
@@ -48,9 +48,11 @@ export const todo = {
         case ENTER_KEY_CODE:
           event.target.blur();
           break;
+        default:
+          return;
       }
     }
-    function isFinished(){
+    function isFinished() {
       return $ctrl.todo && $ctrl.todo.finished;
     }
 
@@ -62,7 +64,7 @@ export const todo = {
       $ctrl.sendTodo();
       $ctrl.setEditableTodoParent(null);
     }
-    function getIdKey(){
+    function getIdKey() {
       return Math.round(Math.random() * 100000);
     }
   }

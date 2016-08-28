@@ -1,72 +1,83 @@
-export default function todoActions(firebaseService){
+export default function todoActions(firebaseService) {
   /** @ngInject */
 
   function addTodo(todo) {
-    return (dispatch)=>{
-      return firebaseService
+    return (dispatch) => (
+      firebaseService
         .addTodo(todo)
-        .then((todo)=>{
+        .then((todo) => {
           dispatch(
             {
               type: 'ADD_TODO',
-              todo: todo
+              todo
             }
-          )
+          );
         })
-    }
+    );
   }
+
   function removeTodo(todo) {
-    return (dispatch)=>{
-      return firebaseService
+    return (dispatch) => (
+      firebaseService
         .removeTodo(todo)
-        .then(()=>{
+        .then(() => {
           dispatch(
             {
               type: 'REMOVE_TODO',
-              todo: todo
+              todo
             }
-          )
+          );
         })
-    }
+    );
   }
-  function getTodos(){
-    return (dispatch)=>{
-      return firebaseService
+
+  function getTodos() {
+    return (dispatch) => (
+      firebaseService
         .getTodos()
-        .then((todos)=>{
+        .then((todos) => {
           dispatch(
             {
               type: 'GET_TODOS',
-              todos: todos
+              todos
             }
-          )
+          );
         })
-    }
+    );
   }
+
   function removeAllTodos() {
-    return (dispatch)=>{
-      return firebaseService
+    return (dispatch) => (
+      firebaseService
         .removeAllTodos()
-        .then(()=>(
+        .then(() => (
           dispatch({
-              type: 'REMOVE_ALL_TODOS'
-            })
-        ));
-    }
+            type: 'REMOVE_ALL_TODOS'
+          })
+        ))
+    );
   }
+
   function editTodo(todo) {
-    firebaseService
-      .editTodo(todo);
-    return {
-      type: 'EDIT_TODO',
-      todo: todo
-    };
+    return (dispatch) => (
+      firebaseService
+        .editTodo(todo)
+        .then(() => {
+          dispatch(
+            {
+              type: 'EDIT_TODO',
+              todo
+            }
+          );
+        })
+    );
   }
+
   return {
     editTodo,
     addTodo,
     removeAllTodos,
     getTodos,
     removeTodo
-  }
+  };
 }
