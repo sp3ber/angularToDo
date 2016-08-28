@@ -31,6 +31,7 @@
         </li>
     </ul>
     <button type="button"
+            ng-disabled="$ctrl.isEditableMode()"
             ng-click="$ctrl.createTodo()"
             class="add-btn todos__add-btn">
         +

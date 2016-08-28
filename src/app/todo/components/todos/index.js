@@ -29,13 +29,16 @@ export const todos = {
     $ctrl.activeFilter = activeFilter;
     $ctrl.setFilter = setFilter;
     $ctrl.isCurrentFilter = isCurrentFilter;
+    $ctrl.isEditableMode = isEditableMode;
 
     function isEditable(todo) {
       return todo === currentEditableTodo;
     }
     function setEditableTodo(todo) {
       return currentEditableTodo = todo;
-
+    }
+    function isEditableMode(){
+      return currentEditableTodo !== null;
     }
     function getTodoIndex(todo){
       return $ctrl.parentTodos.findIndex((item)=>(
