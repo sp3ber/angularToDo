@@ -1,0 +1,14 @@
+.filter-btn {
+  color: #50e3a4;
+  border: 1px solid;
+  background: transparent;
+  font-family: inherit;
+  padding: 10px 15px;
+  min-width: 100px;
+  transition: all 0.2s;
+
+  &:disabled {
+    background: #50e3a4;
+    color: white;
+  }
+}

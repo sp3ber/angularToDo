@@ -1,3 +1,5 @@
+@import 'filter-btn';
+@import 'add-btn';
 .todos {
   background: white;
   margin: 0 auto;
@@ -20,5 +22,11 @@
     top: 100%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
+  }
+
+  &__filter {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
   }
 }

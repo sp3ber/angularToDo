@@ -1,7 +1,20 @@
 <article class="todos">
     <h2 class="todos__header">My awesome TODO list</h2>
+    <div class="todos__filter">
+        <button class="todos__filter-btn filter-btn"
+                ng-disabled="$ctrl.isCurrentFilter($ctrl.activeFilter)"
+                ng-click="$ctrl.setFilter($ctrl.activeFilter)">
+            only active
+        </button>
+        <button class="todos__filter-btn filter-btn"
+                ng-disabled="$ctrl.isCurrentFilter($ctrl.noFilter)"
+                ng-click="$ctrl.setFilter($ctrl.noFilter)"> all </button>
+        <button class="todos__filter-btn filter-btn"
+                ng-disabled="$ctrl.isCurrentFilter($ctrl.finishedFilter)"
+                ng-click="$ctrl.setFilter($ctrl.finishedFilter)"> finished </button>
+    </div>
     <ul class="todos__list">
-        <li ng-repeat="todo in $ctrl.currentTodos.slice().reverse() track by $index" class="todos__item">
+        <li ng-repeat="todo in $ctrl.currentTodos.slice().reverse() | filter:$ctrl.currentFilter track by $index" class="todos__item">
             <todo-item
                 class="todos__item"
                 set-editable-todo="$ctrl.setEditableTodo"
@@ -17,6 +30,4 @@
             class="add-btn todos__add-btn">
         +
     </button>
-    <button type="button"
-            ng-click="$ctrl.removeAllTodos()">remove all</button>
 </article>

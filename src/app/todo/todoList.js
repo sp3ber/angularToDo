@@ -1,6 +1,5 @@
 import {calculateChanges} from '../utils';
 import './todos.scss';
-import './add-btn.scss';
 
 export const todoList = {
   template: require('./todoList.html'),
@@ -12,17 +11,24 @@ export const todoList = {
     getTodos: '<',
     removeAllTodos: '<'
   },
-  controller: function () {
+  controller: function ($filter) {
+    /** @ngInject */
     const $ctrl = this;
     $ctrl.$onChanges = function (changes) {
       $ctrl.currentTodos = Object.assign([], $ctrl.todos);
     };
     let currentEditableTodo = null;
+    $ctrl.currentFilter = $ctrl.noFilter;
     $ctrl.isEditable = isEditable;
     $ctrl.setEditableTodo = setEditableTodo;
     $ctrl.sendTodo = sendTodo;
     $ctrl.createTodo = createTodo;
     $ctrl.getTodoIndex = getTodoIndex;
+    $ctrl.activeFilter = activeFilter;
+    $ctrl.finishedFilter = finishedFilter;
+    $ctrl.activeFilter = activeFilter;
+    $ctrl.setFilter = setFilter;
+    $ctrl.isCurrentFilter = isCurrentFilter;
 
     function isEditable(todo) {
       return todo === currentEditableTodo;
@@ -37,6 +43,11 @@ export const todoList = {
       ));
     }
     function createTodo() {
+      // reset filter, it's not nice to create new
+      // todoItem when you looking for finished items
+      if ($ctrl.currentFilter === $ctrl.finishedFilter) {
+        $ctrl.setFilter($ctrl.noFilter);
+      }
       let newEmptyTodo = {
         text: ''
       };
@@ -73,6 +84,21 @@ export const todoList = {
       const parentTodo = $ctrl.currentTodos.find((item)=>(item.id === todo.id));
       console.log(Boolean(calculateChanges(parentTodo, todo)));
       return Boolean(calculateChanges(parentTodo, todo));
+    }
+    function finishedFilter(todo){
+      return Boolean(todo.finished);
+    }
+    function activeFilter(todo){
+      return !Boolean(todo.finished);
+    }
+    function noFilter(){
+      return true;
+    }
+    function setFilter(filter){
+      $ctrl.currentFilter = filter;
+    }
+    function isCurrentFilter(filter){
+      return $ctrl.currentFilter === filter;
     }
   }
 };
