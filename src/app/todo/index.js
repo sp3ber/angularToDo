@@ -1,11 +1,11 @@
 import angular from 'angular';
 
-import {todoItem} from './todoItem';
-import {todoList} from './todoList';
+import {todo} from './components/todo';
+import {todos} from './components/todos';
 
 export const todoModule = 'todo';
 
 angular
   .module(todoModule, [])
-  .component('todoItem', todoItem)
-  .component('todoList', todoList);
+  .component('todo', todo)
+  .component('todos', todos);

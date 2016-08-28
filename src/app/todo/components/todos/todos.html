@@ -17,14 +17,14 @@
     </h3>
     <ul class="todos__list">
         <li ng-repeat="todo in $ctrl.currentTodos.slice().reverse() | filter:$ctrl.currentFilter track by $index" class="todos__item">
-            <todo-item
+            <todo
                 class="todos__item"
                 set-editable-todo="$ctrl.setEditableTodo"
                 is-editable="$ctrl.isEditable"
                 send-todo="$ctrl.sendTodo"
                 remove-todo="$ctrl.removeTodo"
                 todo="todo">
-            </todo-item>
+            </todo>
         </li>
     </ul>
     <button type="button"

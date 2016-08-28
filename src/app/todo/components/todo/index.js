@@ -3,7 +3,7 @@ import './todo.scss';
 const ESCAPE_KEY_CODE = 27;
 const ENTER_KEY_CODE = 13;
 
-export const todoItem = {
+export const todo = {
   template: require('./todoItem.html'),
   bindings: {
     parentTodo: '<todo',

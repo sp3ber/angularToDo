@@ -1,7 +1,7 @@
 import {calculateChanges} from '../utils';
 import './todos.scss';
 
-export const todoList = {
+export const todos = {
   template: require('./todoList.html'),
   bindings: {
     todos: '<',
