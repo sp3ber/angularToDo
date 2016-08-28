@@ -1,5 +1,6 @@
 import "babel-polyfill";
 import angular from 'angular';
+import ngAnimate from 'angular-animate';
 import ngRedux from 'ng-redux';
 import 'ng-focus-if';
 import 'angular-loading-bar';
@@ -24,6 +25,7 @@ angular
       'ui.router',
       'focus-if',
       'cfp.loadingBar',
+      ngAnimate,
       ngRedux,
       firebase])
   .config(config)

@@ -13,6 +13,16 @@
     margin-bottom: 25px;
   }
 
+  &__item {
+    transition: all 0.2s;
+    &--new {
+      transition: none;
+    };
+    &.ng-leave.ng-leave-active:not(.todos__item--new) {
+      opacity: 0;
+    }
+  }
+
   &__list {
     list-style: none;
   }

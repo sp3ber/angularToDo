@@ -4,7 +4,7 @@ import './todos.scss';
 export const todos = {
   template: require('./todos.html'),
   bindings: {
-    todos: '<',
+    parentTodos: '<todos',
     addTodo: '<',
     removeTodo: '<',
     editTodo: '<',
@@ -15,7 +15,7 @@ export const todos = {
     /** @ngInject */
     const $ctrl = this;
     $ctrl.$onChanges = function (changes) {
-      $ctrl.currentTodos = Object.assign([], $ctrl.todos);
+      $ctrl.todos = Object.assign([], $ctrl.parentTodos);
     };
     let currentEditableTodo = null;
     $ctrl.currentFilter = $ctrl.noFilter;
@@ -38,7 +38,7 @@ export const todos = {
 
     }
     function getTodoIndex(todo){
-      return $ctrl.todos.findIndex((item)=>(
+      return $ctrl.parentTodos.findIndex((item)=>(
         item.id === todo.id
       ));
     }
@@ -51,7 +51,7 @@ export const todos = {
       let newEmptyTodo = {
         text: ''
       };
-      $ctrl.currentTodos.push(
+      $ctrl.todos.push(
         newEmptyTodo
       );
       setEditableTodo(newEmptyTodo);
@@ -61,7 +61,7 @@ export const todos = {
       console.log(isTodoEmpty(todo));
       if (isTodoEmpty(todo) && isNewTodo(todo)) {
         setEditableTodo(null);
-        return $ctrl.currentTodos = Object.assign([], $ctrl.todos);
+        return $ctrl.todos = Object.assign([], $ctrl.parentTodos);
       }
       if (!isNewTodo(todo) && isTodoEmpty(todo)) {
         setEditableTodo(null);
@@ -81,7 +81,7 @@ export const todos = {
       return todo.text.trim() === '';
     }
     function isTodoChanged(todo){
-      const parentTodo = $ctrl.currentTodos.find((item)=>(item.id === todo.id));
+      const parentTodo = $ctrl.todos.find((item)=>(item.id === todo.id));
       console.log(Boolean(calculateChanges(parentTodo, todo)));
       return Boolean(calculateChanges(parentTodo, todo));
     }

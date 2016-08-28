@@ -13,10 +13,13 @@
                 ng-disabled="$ctrl.isCurrentFilter($ctrl.finishedFilter)"
                 ng-click="$ctrl.setFilter($ctrl.finishedFilter)"> finished </button>
     </div>
-    <h3 ng-if="!$ctrl.currentTodos.length" class="todos__title">No todos (you're lazy bastard)
+    <h3 ng-if="!$ctrl.todos.length" class="todos__title">No todos (you're lazy bastard)
     </h3>
     <ul class="todos__list">
-        <li ng-repeat="todo in $ctrl.currentTodos.slice().reverse() | filter:$ctrl.currentFilter track by $index" class="todos__item">
+        <li
+            class="todos__item"
+            ng-class="{'todos__item--new': !todo.id}"
+            ng-repeat="todo in $ctrl.todos.slice().reverse() | filter:$ctrl.currentFilter track by todo.id" >
             <todo
                 class="todos__item"
                 set-editable-todo="$ctrl.setEditableTodo"
