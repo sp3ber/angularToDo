@@ -1,16 +1,15 @@
 var express = require('express');
 var path = require('path');
 var app = express();
-var staticPath = path.join(__dirname, '/../dist');
+var staticPath = path.join(__dirname, '/../public');
 
-var port = 80;
-
+app.set('port', (process.env.PORT || 5000));
 app.use(express.static(staticPath));
 app.use(function (req, res) {
   res.status(404);
   res.send('File not found!');
 });
 
-app.listen(port, function () {
-  console.log('App started on port ' + port);
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
