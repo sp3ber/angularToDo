@@ -44,7 +44,7 @@ export const todo = {
           revertTodo();
           break;
         case ENTER_KEY_CODE:
-          event.target.blur();
+          $ctrl.onBlur();
           break;
         default:
           return;
