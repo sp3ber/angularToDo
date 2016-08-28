@@ -1,8 +1,8 @@
-import {calculateChanges} from '../utils';
+import {calculateChanges} from '../../utils';
 import './todos.scss';
 
 export const todos = {
-  template: require('./todoList.html'),
+  template: require('./todos.html'),
   bindings: {
     todos: '<',
     addTodo: '<',

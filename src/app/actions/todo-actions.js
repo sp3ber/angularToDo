@@ -62,7 +62,6 @@ export default function todoActions(firebaseService){
       todo: todo
     };
   }
-
   return {
     editTodo,
     addTodo,
