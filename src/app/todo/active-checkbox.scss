@@ -15,6 +15,10 @@
     border-radius: 50%;
     color: #edeff4;
     border: 2px solid;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__hidden:checked + &__present {

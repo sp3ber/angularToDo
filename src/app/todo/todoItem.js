@@ -10,6 +10,7 @@ export const todoItem = {
     isEditableParent: '<isEditable',
     setEditableTodoParent: '<setEditableTodo',
     sendTodoParent: '<sendTodo',
+    removeParentTodo: '<removeTodo',
   },
   controller: function () {
     /** @ngInject */
@@ -20,6 +21,7 @@ export const todoItem = {
       $ctrl.isEditable = ()=>($ctrl.isEditableParent($ctrl.parentTodo));
       $ctrl.setEditableTodo = ()=>($ctrl.setEditableTodoParent($ctrl.parentTodo));
       $ctrl.sendTodo = ()=>($ctrl.sendTodoParent($ctrl.todo));
+      $ctrl.removeTodo = ()=>($ctrl.removeParentTodo($ctrl.todo));
     };
 
     $ctrl.$onChanges = function (changes) {

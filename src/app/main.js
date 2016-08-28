@@ -4,17 +4,19 @@ export const main = {
   template: require('./main.html'),
   controller: function ($ngRedux, $scope, todoActions) {
     /** @ngInject */
-    this.todos = [];
-    this.$onInit = function(){
-      this.getTodos();
+    const $ctrl = this;
+    $ctrl.$onInit = function(){
+      $ctrl.getTodos();
     };
 
-    this.mapStateToThis = function (state) {
+    $ctrl.onLoading = false;
+
+    $ctrl.mapStateTo$ctrl = function (state) {
       return {
         todos: state.todos
       };
     };
-    const unsubscribe = $ngRedux.connect(this.mapStateToThis, todoActions)(this);
+    const unsubscribe = $ngRedux.connect($ctrl.mapStateTo$ctrl, todoActions)($ctrl);
     $scope.$on('$destroy', unsubscribe);
   }
 };

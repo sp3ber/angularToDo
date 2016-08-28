@@ -1,7 +1,8 @@
 import './spinner.scss';
-export const spinner = {
+const spinner = {
   template: require('./spinner.html'),
   bindings: {
     isActive: '<'
   }
 };
+export default spinner;

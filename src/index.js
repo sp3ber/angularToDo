@@ -6,6 +6,7 @@ import 'angular-loading-bar';
 import firebase from 'angularfire';
 
 import {todoModule} from './app/todo';
+import spinner from './app/components/spinner/spinner';
 import 'angular-ui-router';
 import routesConfig from './routes';
 import config from './index.config';
@@ -29,4 +30,5 @@ angular
   .config(routesConfig)
   .factory('todoActions', todoActions)
   .factory('firebaseService', firebaseService)
+  .component('spinner', spinner)
   .component('app', main);

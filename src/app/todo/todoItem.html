@@ -10,9 +10,12 @@
                     type="checkbox"
                     ng-change="$ctrl.submitTodo()"
                     class="active-checkbox__hidden"/>
-            <label for="{{$ctrl.idKey}}" class="active-checkbox__present"></label>
+            <label title="Finish/Unfinish" for="{{$ctrl.idKey}}" class="active-checkbox__present"></label>
         </fieldset>
-        <button class="remove-btn todo__remove-btn">x</button>
+        <button
+                ng-click="$ctrl.removeTodo()"
+                class="remove-btn todo__remove-btn"
+                title="Remove"></button>
         <form class="todo__form"
               name="todoForm"
               ng-if="$ctrl.isEditable()">
