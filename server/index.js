@@ -14,9 +14,9 @@ http.createServer(function (req, res) {
       res.end();
     } else if (stats.isFile()) {
       // content type
-      var type = mime.lookup(pathname);
+/*      var type = mime.lookup(pathname);
       console.log(type);
-      res.setHeader('Content-Type', type);
+      res.setHeader('Content-Type', type);*/
       // create and pipe readable stream
       var file = fs.createReadStream(pathname);
       file.on("open", function() {

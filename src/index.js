@@ -5,7 +5,6 @@ import ngRedux from 'ng-redux';
 import toastr from 'angular-toastr';
 import 'angular-toastr/dist/angular-toastr.css';
 import 'ng-focus-if';
-import 'angular-loading-bar';
 import firebase from 'angularfire';
 
 import {todoModule} from './app/todo';
@@ -25,7 +24,6 @@ angular
     [todoModule,
       'ui.router',
       'focus-if',
-      'cfp.loadingBar',
       ngAnimate,
       toastr,
       ngRedux,
