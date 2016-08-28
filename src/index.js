@@ -2,6 +2,8 @@ import "babel-polyfill";
 import angular from 'angular';
 import ngAnimate from 'angular-animate';
 import ngRedux from 'ng-redux';
+import toastr from 'angular-toastr';
+import 'angular-toastr/dist/angular-toastr.css';
 import 'ng-focus-if';
 import 'angular-loading-bar';
 import firebase from 'angularfire';
@@ -11,12 +13,11 @@ import spinner from './app/components/spinner/spinner';
 import 'angular-ui-router';
 import routesConfig from './routes';
 import config from './index.config';
-import todoActions from './app/actions/todo-actions';
+import actions from './app/actions';
 import firebaseService from './app/services/firebase';
 
 import {main} from './app/main';
-
-import 'reset-css/_reset.scss';
+import './reset.scss';
 import './index.scss';
 
 angular
@@ -26,11 +27,12 @@ angular
       'focus-if',
       'cfp.loadingBar',
       ngAnimate,
+      toastr,
       ngRedux,
       firebase])
   .config(config)
   .config(routesConfig)
-  .factory('todoActions', todoActions)
+  .factory('actions', actions)
   .factory('firebaseService', firebaseService)
   .component('spinner', spinner)
   .component('app', main);

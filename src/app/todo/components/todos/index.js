@@ -11,11 +11,10 @@ export const todos = {
     removeAllTodos: '<'
   },
   controller() {
-    /** @ngInject */
     const $ctrl = this;
     let currentEditableTodo = null;
     $ctrl.$onChanges = function () {
-      $ctrl.todos = Object.assign([], $ctrl.parentTodos);
+      copyTodosFromParent();
       setEditableTodo(null);
     };
     $ctrl.$onInit = function () {
@@ -71,7 +70,7 @@ export const todos = {
       // clean new empty todo
       if (isTodoEmpty(todo) && isNewTodo(todo)) {
         setEditableTodo(null);
-        $ctrl.todos = Object.assign([], $ctrl.parentTodos);
+        copyTodosFromParent();
         return;
       }
       if (!isNewTodo(todo) && isTodoEmpty(todo)) {
@@ -117,6 +116,10 @@ export const todos = {
 
     function isCurrentFilter(filter) {
       return $ctrl.currentFilter === filter;
+    }
+
+    function copyTodosFromParent() {
+      $ctrl.todos = Object.assign([], $ctrl.parentTodos.items);
     }
   }
 };

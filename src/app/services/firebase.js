@@ -1,4 +1,5 @@
-export default function firebaseService($ngRedux, $firebaseObject, $firebaseArray) {
+/** @ngInject */
+export default function firebaseService($timeout, $ngRedux, $firebaseObject, $firebaseArray) {
   const config = {
     apiKey: "AIzaSyB-lVFYWcGWRrtDyHC7tU9BLCgzmzIWgSc",
     authDomain: "angulartodo-99632.firebaseapp.com",
@@ -10,9 +11,17 @@ export default function firebaseService($ngRedux, $firebaseObject, $firebaseArra
 
   const getTodos = () => {
     const data = $firebaseArray(ref);
+    return Promise.race([
+      data.$loaded().then(() => {
+        return data.map(createPlaneObjectFrom);
+      }),
+      new Promise((resolve, reject) => {
+        $timeout(() => reject(new Error('request timeout')), 5000);
+      })
+    ]);/*
     return data.$loaded().then(() => {
       return data.map(createPlaneObjectFrom);
-    });
+    });*/
   };
   const removeAllTodos = () => {
     const data = $firebaseArray(ref);

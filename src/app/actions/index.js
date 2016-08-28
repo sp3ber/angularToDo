@@ -1,6 +1,5 @@
-export default function todoActions(firebaseService) {
-  /** @ngInject */
-
+/** @ngInject */
+export default function actions(firebaseService) {
   function addTodo(todo) {
     return (dispatch) => (
       firebaseService
@@ -32,7 +31,10 @@ export default function todoActions(firebaseService) {
   }
 
   function getTodos() {
-    return (dispatch) => (
+    return (dispatch) => {
+      dispatch({
+        type: 'FETCHING'
+      });
       firebaseService
         .getTodos()
         .then((todos) => {
@@ -43,7 +45,15 @@ export default function todoActions(firebaseService) {
             }
           );
         })
-    );
+        .catch(() => (
+          dispatch(
+            {
+              type: 'FETCH_ERROR',
+              error: 'Could not get todos, check your connection'
+            }
+          )
+        ));
+    };
   }
 
   function removeAllTodos() {

@@ -13,8 +13,6 @@ export const todo = {
     removeParentTodo: '<removeTodo'
   },
   controller() {
-    /** @ngInject */
-
     const $ctrl = this;
 
     $ctrl.$onInit = function () {

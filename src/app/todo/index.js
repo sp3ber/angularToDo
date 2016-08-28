@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 import {todo} from './components/todo';
 import {todos} from './components/todos';
 

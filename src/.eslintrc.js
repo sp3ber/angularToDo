@@ -8,6 +8,7 @@ module.exports = {
     "babel/arrow-parens": 0
   },
   globals: {
-    firebase: true
+    firebase: true,
+    process: true
   }
 };
