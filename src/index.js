@@ -20,6 +20,7 @@ import './reset.scss';
 import './index.scss';
 
 // configs
+import firebaseApiConfig from './firebaseApiConfig'
 import routesConfig from './routes';
 import config from './index.config';
 
@@ -37,6 +38,7 @@ angular
       firebase])
   .config(config)
   .config(routesConfig)
+  .constant('firebaseApiConfig', firebaseApiConfig)
   .factory('actions', actions)
   .factory('firebaseService', firebaseService)
   .component('todos', todos)

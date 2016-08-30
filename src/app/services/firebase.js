@@ -1,16 +1,11 @@
 /** @ngInject */
-export default function firebaseService($timeout, $ngRedux, $firebaseObject, $firebaseArray) {
-  const config = {
-    apiKey: "AIzaSyB-lVFYWcGWRrtDyHC7tU9BLCgzmzIWgSc",
-    authDomain: "angulartodo-99632.firebaseapp.com",
-    databaseURL: "https://angulartodo-99632.firebaseio.com",
-    storageBucket: ""
-  };
-  firebase.initializeApp(config);
+export default function firebaseService($timeout, $ngRedux, $firebaseObject, $firebaseArray, firebaseApiConfig) {
+  firebase.initializeApp(firebaseApiConfig);
   const ref = firebase.database().ref().child('todos');
 
-  const getTodos = () => {
+  function getTodos () {
     const data = $firebaseArray(ref);
+
     return Promise.race([
       data.$loaded().then(() => {
         return data.map(createPlaneObjectFrom);
@@ -18,20 +13,13 @@ export default function firebaseService($timeout, $ngRedux, $firebaseObject, $fi
       new Promise((resolve, reject) => {
         $timeout(() => reject(new Error('request timeout')), 5000);
       })
-    ]);/*
-    return data.$loaded().then(() => {
-      return data.map(createPlaneObjectFrom);
-    });*/
-  };
-  const removeAllTodos = () => {
+    ]);
+  }
+  function removeAllTodos () {
     const data = $firebaseArray(ref);
-    return data.$loaded().then(() => {
-      data.forEach((item, index) => (
-        data.$remove(index)
-      ));
-    });
-  };
-  const addTodo = (todo) => {
+    return data.$loaded().then(() => { data.forEach((item, index) => (data.$remove(index)));});
+  }
+  function addTodo (todo) {
     const data = $firebaseArray(ref);
     return data
       .$add(todo)
@@ -41,8 +29,8 @@ export default function firebaseService($timeout, $ngRedux, $firebaseObject, $fi
           ...todo
         }
       ));
-  };
-  const removeTodo = (todo) => {
+  }
+  function removeTodo (todo) {
     // don't use $save method for $todoArray, because it needs index,
     // which could change when when making async operations
     const todoRef = firebase.database().ref().child(`todos/${todo.id}`);
@@ -55,8 +43,8 @@ export default function firebaseService($timeout, $ngRedux, $firebaseObject, $fi
         todo
       ));
     }
-  };
-  const editTodo = (todo) => {
+  }
+  function editTodo (todo) {
     const {id, ...paramsToSave} = todo;
     // don't use $save method for $todoArray, because it needs index,
     // which could change when when making async operations
@@ -72,7 +60,7 @@ export default function firebaseService($timeout, $ngRedux, $firebaseObject, $fi
         createPlaneObjectFrom(todoFromDb)
       ));
     }
-  };
+  }
 
   function createPlaneObjectFrom(firebaseObj) {
     const result = Object.assign({}, firebaseObj);
