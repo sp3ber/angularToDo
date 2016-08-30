@@ -20,7 +20,7 @@ import './reset.scss';
 import './index.scss';
 
 // configs
-import firebaseApiConfig from './firebaseApiConfig'
+import firebaseApiConfig from './firebaseApiConfig';
 import routesConfig from './routes';
 import config from './index.config';
 

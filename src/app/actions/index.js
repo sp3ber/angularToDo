@@ -1,5 +1,10 @@
 /** @ngInject */
 export default function actions(firebaseService) {
+  function fetching(){
+    return {
+      type: 'FETCHING'
+    }
+  }
   function addTodo(todo) {
     return (dispatch) => (
       firebaseService
@@ -32,9 +37,7 @@ export default function actions(firebaseService) {
 
   function getTodos() {
     return (dispatch) => {
-      dispatch({
-        type: 'FETCHING'
-      });
+      dispatch(fetching());
       firebaseService
         .getTodos()
         .then((todos) => {
