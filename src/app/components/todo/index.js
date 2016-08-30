@@ -3,7 +3,7 @@ import './todo.scss';
 const ESCAPE_KEY_CODE = 27;
 const ENTER_KEY_CODE = 13;
 
-export const todo = {
+const todo = {
   template: require('./todo.html'),
   bindings: {
     parentTodo: '<todo',
@@ -63,7 +63,9 @@ export const todo = {
       $ctrl.setEditableTodoParent(null);
     }
     function getIdKey() {
-      return Math.round(Math.random() * 100000);
+      return (new Date() + Math.round(Math.random() * 100000));
     }
   }
 };
+
+export default todo;
