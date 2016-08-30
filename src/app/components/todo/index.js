@@ -34,15 +34,17 @@ const todo = {
     $ctrl.isFinished = isFinished;
 
     function onBlur() {
-      $ctrl.setEditableTodoParent(null);
+      unsetEditable();
       submitTodo();
     }
 
     function onKeyUp(event) {
       switch (event.keyCode) {
-        case ESCAPE_KEY_CODE:
+        case ESCAPE_KEY_CODE: {
           revertTodo();
+          $ctrl.onBlur();
           break;
+        }
         case ENTER_KEY_CODE:
           $ctrl.onBlur();
           break;
@@ -60,10 +62,13 @@ const todo = {
 
     function submitTodo() {
       $ctrl.sendTodo();
-      $ctrl.setEditableTodoParent(null);
+      unsetEditable();
     }
     function getIdKey() {
       return (new Date() + Math.round(Math.random() * 100000));
+    }
+    function unsetEditable(){
+      $ctrl.setEditableTodoParent(null);
     }
   }
 };

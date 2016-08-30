@@ -19,7 +19,8 @@
         <form class="todo__form"
               name="todoForm"
               ng-if="$ctrl.isEditable()">
-            <input class="todo__input"
+            <input fix-ie-clear class="todo__input"
+                   placeholder="Awesome todo like Miha"
                    ng-blur="$ctrl.onBlur()"
                    ng-keyup="$ctrl.onKeyUp($event)"
                    focus-if="$ctrl.isEditable()" ng-model="$ctrl.todo.text"/>

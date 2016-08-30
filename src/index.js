@@ -10,14 +10,15 @@ import firebase from 'angularfire';
 import 'angular-ui-router';
 
 // inner components
-import main from './app/main';
+import main from './app/containers/main';
 import spinner from './app/components/spinner';
 import todos from './app/components/todos';
 import todo from './app/components/todo';
 
+// so lonely directives
+import fixIeClear from './app/directives/fixIeClear';
 // common styles
-import './reset.scss';
-import './index.scss';
+import './assets/index.scss';
 
 // configs
 import firebaseApiConfig from './firebaseApiConfig';
@@ -41,6 +42,7 @@ angular
   .constant('firebaseApiConfig', firebaseApiConfig)
   .factory('actions', actions)
   .factory('firebaseService', firebaseService)
+  .directive('fixIeClear', fixIeClear)
   .component('todos', todos)
   .component('todo', todo)
   .component('spinner', spinner)

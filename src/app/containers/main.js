@@ -1,3 +1,5 @@
+import './main-container.scss';
+
 const main = {
   template: require('./main.html'),
   /** @ngInject */
