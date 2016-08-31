@@ -1,3 +1,4 @@
+$checkbox-size: 24px;
 .active-checkbox {
 
   &__hidden {
@@ -5,16 +6,25 @@
     visibility: hidden;
   }
 
-
+  &__icon {
+    fill: currentColor;
+    position: absolute;
+    overflow: hidden;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+  }
 
   &__present {
+    position: relative;
     display: block;
-    width: 23px;
-    height: 23px;
+    width: $checkbox-size;
+    height: $checkbox-size;
     box-sizing:border-box;
     border-radius: 50%;
     color: #edeff4;
-    border: 2px solid;
+    // use currentColor!, it fixes safari bug with partly fill
+    border: 2px solid currentColor;
 
     &:hover {
       cursor: pointer;
@@ -23,12 +33,5 @@
 
   &__hidden:checked + &__present {
     color: #50e3a4;
-    &:before {
-      content: '\2713';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-    }
   }
 }

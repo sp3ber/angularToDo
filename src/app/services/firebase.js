@@ -2,6 +2,7 @@
 export default function firebaseService($timeout, $ngRedux, $firebaseObject, $firebaseArray, firebaseApiConfig) {
   firebase.initializeApp(firebaseApiConfig);
   const ref = firebase.database().ref().child('todos');
+  const NETWORK_TEMEOUT_MS = 10000;
 
   function getTodos() {
     const data = $firebaseArray(ref);
@@ -14,7 +15,7 @@ export default function firebaseService($timeout, $ngRedux, $firebaseObject, $fi
       return data.map(createPlaneObjectFrom);
     }
     function rejectTimeoutErr(_resolve, reject) {
-      return $timeout(() => reject(new Error('request timeout')), 5000);
+      return $timeout(() => reject(new Error('request timeout')), NETWORK_TEMEOUT_MS);
     }
   }
   function addTodo(todo) {
@@ -45,7 +46,6 @@ export default function firebaseService($timeout, $ngRedux, $firebaseObject, $fi
   }
   function editTodo(todo) {
     const {id, ...paramsToSave} = todo;
-    console.log(paramsToSave);
     // don't use $save method for $todoArray, because it needs index,
     // which could change when when making async operations
     const todoRef = firebase.database().ref().child(`todos/${id}`);

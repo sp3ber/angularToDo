@@ -67,7 +67,7 @@ const todo = {
     function getIdKey() {
       return (new Date() + Math.round(Math.random() * 100000));
     }
-    function unsetEditable(){
+    function unsetEditable() {
       $ctrl.setEditableTodoParent(null);
     }
   }

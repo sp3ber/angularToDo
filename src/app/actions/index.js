@@ -1,9 +1,9 @@
 /** @ngInject */
 export default function actions(firebaseService) {
-  function fetching(){
+  function fetching() {
     return {
       type: 'FETCHING'
-    }
+    };
   }
   function addTodo(todo) {
     return (dispatch) => (

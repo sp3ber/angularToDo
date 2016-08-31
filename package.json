@@ -5,6 +5,7 @@
     "angular-toastr": "^2.1.1",
     "angular-ui-router": "1.0.0-beta.1",
     "angularfire": "^2.0.2",
+    "express": "^4.14.0",
     "ng-focus-if": "^1.0.7",
     "ng-redux": "^3.4.0-beta.1",
     "redux": "^3.5.2",

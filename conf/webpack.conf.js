@@ -7,13 +7,13 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
   module: {
-/*    preLoaders: [
+    preLoaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint'
       }
-    ],*/
+    ],
     loaders: [
       {
         test: /.json$/,
@@ -37,6 +37,10 @@ module.exports = {
           'ng-annotate',
           'babel'
         ]
+      },
+      {
+        test: /\.svg/,
+        loader: 'svg-url-loader'
       },
       {
         test: /.html$/,
