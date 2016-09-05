@@ -3,7 +3,7 @@ import './todo.scss';
 const ESCAPE_KEY_CODE = 27;
 const ENTER_KEY_CODE = 13;
 
-export const todo = {
+const todo = {
   template: require('./todo.html'),
   bindings: {
     parentTodo: '<todo',
@@ -34,15 +34,17 @@ export const todo = {
     $ctrl.isFinished = isFinished;
 
     function onBlur() {
-      $ctrl.setEditableTodoParent(null);
+      unsetEditable();
       submitTodo();
     }
 
     function onKeyUp(event) {
       switch (event.keyCode) {
-        case ESCAPE_KEY_CODE:
+        case ESCAPE_KEY_CODE: {
           revertTodo();
+          $ctrl.onBlur();
           break;
+        }
         case ENTER_KEY_CODE:
           $ctrl.onBlur();
           break;
@@ -60,10 +62,15 @@ export const todo = {
 
     function submitTodo() {
       $ctrl.sendTodo();
-      $ctrl.setEditableTodoParent(null);
+      unsetEditable();
     }
     function getIdKey() {
-      return Math.round(Math.random() * 100000);
+      return (new Date() + Math.round(Math.random() * 100000));
+    }
+    function unsetEditable() {
+      $ctrl.setEditableTodoParent(null);
     }
   }
 };
+
+export default todo;

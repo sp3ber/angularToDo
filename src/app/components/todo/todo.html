@@ -1,0 +1,41 @@
+<div class="todo">
+    <section class="todo__content">
+        <div class="todo__title" ng-class="{'todo__title--finished': $ctrl.isFinished()}" ng-if="!$ctrl.isEditable()" ng-click="!$ctrl.isFinished() && $ctrl.setEditableTodo()">
+            {{$ctrl.todo.text}}
+        </div>
+        <div class="todo__controls" ng-if="!$ctrl.isEditable()">
+            <fieldset
+                      class="active-checkbox todo__control ">
+                <input  ng-model="$ctrl.todo.finished"
+                        id="{{$ctrl.idKey}}"
+                        type="checkbox"
+                        ng-change="$ctrl.submitTodo()"
+                        class="active-checkbox__hidden"/>
+                <label tabindex="0" title="Finish/Unfinish" for="{{$ctrl.idKey}}" class="active-checkbox__present">
+                    <svg class="active-checkbox__icon"
+                         width="12" height="15"
+                         viewBox="0 0 342.357 342.357">
+                        <path d="M290.04 33.286l-171.18 171.14-66.54-66.52L0 190.227 118.862 309.07 342.357 85.607"/>
+                    </svg>
+                </label>
+            </fieldset>
+            <button
+                    ng-click="$ctrl.removeTodo()"
+                    class="remove-btn todo__control "
+                    title="Remove">
+                <svg class="remove-btn__icon"
+                     fill="#f08080"
+                     width="10" height="10"
+                     viewBox="0 0 95.939 95.939">
+                    <path d="M62.82 47.97L95.35 15.436c.78-.78.78-2.047 0-2.828L83.332.586C82.96.21 82.45 0 81.92 0c-.53 0-1.04.21-1.415.586L47.97 33.12 15.435.587c-.75-.75-2.078-.75-2.828 0L.587 12.608c-.78.78-.78 2.047 0 2.828L33.12 47.97.588 80.504c-.78.78-.78 2.047 0 2.828l12.02 12.02c.375.376.884.587 1.414.587.53 0 1.04-.212 1.415-.587L47.97 62.818l32.535 32.535c.375.375.884.586 1.414.586.528 0 1.038-.212 1.413-.587l12.02-12.02c.78-.782.78-2.05 0-2.83L62.82 47.97z"/>
+                </svg>
+            </button>
+        </div>
+        <input ng-if="$ctrl.isEditable()"
+               fix-ie-clear class="todo__input"
+               placeholder="Awesome todo like Miha"
+               ng-blur="$ctrl.onBlur()"
+               ng-keyup="$ctrl.onKeyUp($event)"
+               focus-if="$ctrl.isEditable()" ng-model="$ctrl.todo.text"/>
+    </section>
+</div>

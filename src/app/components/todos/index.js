@@ -1,6 +1,6 @@
 import './todos.scss';
 
-export const todos = {
+const todos = {
   template: require('./todos.html'),
   bindings: {
     parentTodos: '<todos',
@@ -123,3 +123,5 @@ export const todos = {
     }
   }
 };
+
+export default todos;

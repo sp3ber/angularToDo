@@ -1,0 +1,24 @@
+$remove-btn-size: 24px;
+.remove-btn {
+  width: $remove-btn-size;
+  height: $remove-btn-size;
+  box-sizing: border-box;
+  border-radius: 50%;
+  color: lightcoral;
+  padding: 0;
+  border: 2px solid currentColor;
+  background: transparent;
+  position: relative;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__icon {
+    fill: currentColor;
+    position: absolute;
+    overflow: hidden;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+  }
+}

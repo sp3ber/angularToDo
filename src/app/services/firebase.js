@@ -1,78 +1,64 @@
 /** @ngInject */
-export default function firebaseService($timeout, $ngRedux, $firebaseObject, $firebaseArray) {
-  const config = {
-    apiKey: "AIzaSyB-lVFYWcGWRrtDyHC7tU9BLCgzmzIWgSc",
-    authDomain: "angulartodo-99632.firebaseapp.com",
-    databaseURL: "https://angulartodo-99632.firebaseio.com",
-    storageBucket: ""
-  };
-  firebase.initializeApp(config);
+export default function firebaseService($timeout, $ngRedux, $firebaseObject, $firebaseArray, firebaseApiConfig) {
+  firebase.initializeApp(firebaseApiConfig);
   const ref = firebase.database().ref().child('todos');
+  const NETWORK_TEMEOUT_MS = 10000;
 
-  const getTodos = () => {
+  function getTodos() {
     const data = $firebaseArray(ref);
-    return Promise.race([
-      data.$loaded().then(() => {
-        return data.map(createPlaneObjectFrom);
-      }),
-      new Promise((resolve, reject) => {
-        $timeout(() => reject(new Error('request timeout')), 5000);
-      })
-    ]);/*
-    return data.$loaded().then(() => {
+    const fetchTodosPromise = data.$loaded().then(getPlaneTodos);
+    const timeOutPromise = new Promise(rejectTimeoutErr);
+
+    return Promise.race([fetchTodosPromise, timeOutPromise]);
+
+    function getPlaneTodos() {
       return data.map(createPlaneObjectFrom);
-    });*/
-  };
-  const removeAllTodos = () => {
-    const data = $firebaseArray(ref);
-    return data.$loaded().then(() => {
-      data.forEach((item, index) => (
-        data.$remove(index)
-      ));
-    });
-  };
-  const addTodo = (todo) => {
+    }
+    function rejectTimeoutErr(_resolve, reject) {
+      return $timeout(() => reject(new Error('request timeout')), NETWORK_TEMEOUT_MS);
+    }
+  }
+  function addTodo(todo) {
     const data = $firebaseArray(ref);
     return data
       .$add(todo)
-      .then((todoRef) => (
-        {
-          id: todoRef.key,
-          ...todo
-        }
-      ));
-  };
-  const removeTodo = (todo) => {
+      .then(getPlaneTodoFromRef);
+
+    function getPlaneTodoFromRef(todoRef) {
+      return {
+        id: todoRef.key,
+        ...todo
+      };
+    }
+  }
+  function removeTodo(todo) {
     // don't use $save method for $todoArray, because it needs index,
     // which could change when when making async operations
     const todoRef = firebase.database().ref().child(`todos/${todo.id}`);
     const todoFromDb = $firebaseObject(todoRef);
-    return todoFromDb.$loaded().then(() => {
-      remove(todoFromDb);
-    });
-    function remove(todoFromDb) {
-      return todoFromDb.$remove().then(() => (
-        todo
-      ));
+    return todoFromDb.$loaded().then(removeAndGetTodo);
+
+    function removeAndGetTodo() {
+      return todoFromDb
+        .$remove()
+        .then(() => (todo));
     }
-  };
-  const editTodo = (todo) => {
+  }
+  function editTodo(todo) {
     const {id, ...paramsToSave} = todo;
     // don't use $save method for $todoArray, because it needs index,
     // which could change when when making async operations
     const todoRef = firebase.database().ref().child(`todos/${id}`);
     const todoFromDb = $firebaseObject(todoRef);
-    return todoFromDb.$loaded().then(() => {
-      saveTodo(todoFromDb, paramsToSave);
-    });
+    return todoFromDb.$loaded().then(saveAndGetPlaneTodo);
 
-    function saveTodo(todo, newParams) {
-      Object.assign(todo, newParams);
+    function saveAndGetPlaneTodo() {
+      Object.assign(todoFromDb, paramsToSave);
       return todoFromDb.$save().then(() => (
         createPlaneObjectFrom(todoFromDb)
       ));
     }
-  };
+  }
 
   function createPlaneObjectFrom(firebaseObj) {
     const result = Object.assign({}, firebaseObj);
@@ -87,7 +73,6 @@ export default function firebaseService($timeout, $ngRedux, $firebaseObject, $fi
 
   return {
     addTodo,
-    removeAllTodos,
     getTodos,
     editTodo,
     removeTodo

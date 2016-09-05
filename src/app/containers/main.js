@@ -1,4 +1,6 @@
-export const main = {
+import './main-container.scss';
+
+const main = {
   template: require('./main.html'),
   /** @ngInject */
   controller($ngRedux, actions, $scope, toastr) {
@@ -22,3 +24,5 @@ export const main = {
     $ctrl.$onDestroy = $ngRedux.connect($ctrl.mapStateTo$ctrl, actions)($ctrl);
   }
 };
+
+export default main;
